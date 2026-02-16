@@ -1,0 +1,216 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-lg) var(--space-md);
+    gap: var(--space-md);
+    z-index: 100;
+    overflow-y: auto;
+    transition: transform var(--transition-normal);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-sm) 0;
+    margin-bottom: var(--space-sm);
+}
+
+.logoIcon {
+    font-size: 2rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+.logoTitle {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 800;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+}
+
+.logoSubtitle {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+}
+
+.userCard {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+}
+
+.petPreview {
+    flex-shrink: 0;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.userName {
+    font-weight: 700;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.userCoins {
+    font-size: 0.8rem;
+    color: var(--accent-warning);
+    font-weight: 600;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.9rem;
+    border-left: 3px solid transparent;
+    transition: all var(--transition-fast);
+}
+
+.navItem:hover {
+    color: var(--text-primary);
+    background: var(--bg-card);
+}
+
+.navItem.active {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.navIcon {
+    font-size: 1.15rem;
+    width: 24px;
+    text-align: center;
+}
+
+.navLabel {
+    white-space: nowrap;
+}
+
+.petStatus {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+}
+
+.statRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.miniBar {
+    width: 80px;
+    height: 5px;
+    background: var(--bg-surface);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.miniBarFill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width var(--transition-slow);
+}
+
+.logoutBtn {
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+    text-align: left;
+}
+
+.logoutBtn:hover {
+    color: var(--text-primary);
+    background: var(--bg-card-hover);
+    border-color: var(--accent-primary);
+}
+
+.mobileToggle {
+    display: none;
+    position: fixed;
+    top: var(--space-md);
+    left: var(--space-md);
+    z-index: 200;
+    width: 40px;
+    height: 40px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .mobileToggle {
+        display: flex;
+    }
+
+    .overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 99;
+    }
+}

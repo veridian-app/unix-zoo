@@ -1,0 +1,344 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    animation: fadeIn 0.4s ease-out;
+    position: relative;
+}
+
+.title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 800;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+}
+
+/* Toast Message */
+.toast {
+    position: fixed;
+    top: var(--space-xl);
+    right: var(--space-xl);
+    background: var(--bg-card);
+    border: 1px solid var(--accent-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md) var(--space-lg);
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: var(--shadow-glow);
+    z-index: 500;
+    animation: slideUp 0.3s ease-out;
+}
+
+/* Pet Section */
+.petSection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.petCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    padding: var(--space-xl);
+}
+
+.petContainer {
+    transition: transform 0.3s ease;
+}
+
+.feedAnimation {
+    animation: bounce 0.6s ease;
+}
+
+.petName {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+.statusBars {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.barRow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.barLabel {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    min-width: 90px;
+}
+
+.barTrack {
+    flex: 1;
+    height: 10px;
+    background: var(--bg-surface);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.barFill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width var(--transition-slow);
+}
+
+.barValue {
+    font-size: 0.85rem;
+    font-weight: 700;
+    min-width: 40px;
+    text-align: right;
+}
+
+/* Feed Section */
+.feedSection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.feedTitle {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.feedItems {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+}
+
+.feedBtn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.feedBtn:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-secondary);
+    transform: scale(1.05);
+}
+
+.feedEmoji {
+    font-size: 1.2rem;
+}
+
+.feedCount {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+/* Equipped Section */
+.equippedSection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.equippedItems {
+    display: flex;
+    gap: var(--space-md);
+}
+
+.equippedSlot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.slotLabel {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.equippedItem {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-surface);
+    border: 2px solid var(--accent-primary);
+    border-radius: var(--radius-md);
+    font-size: 1.5rem;
+    transition: all var(--transition-fast);
+}
+
+.equippedItem:hover {
+    transform: scale(1.1);
+    background: var(--bg-card-hover);
+}
+
+.emptySlot {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-surface);
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-muted);
+    font-size: 1.2rem;
+}
+
+/* Shop Section */
+.shopSection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.shopCard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.shopHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.shopTitle {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.coinBalance {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--accent-warning);
+    padding: var(--space-xs) var(--space-md);
+    background: rgba(251, 191, 36, 0.1);
+    border-radius: var(--radius-full);
+}
+
+.shopTabs {
+    display: flex;
+    gap: 4px;
+    background: var(--bg-surface);
+    padding: 3px;
+    border-radius: var(--radius-md);
+}
+
+.shopTab {
+    flex: 1;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+}
+
+.shopTab:hover {
+    color: var(--text-primary);
+}
+
+.shopTabActive {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-glow);
+}
+
+.shopItems {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.shopItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.shopItem:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-light);
+}
+
+.buyAnimation {
+    animation: coinPop 0.5s ease-out;
+}
+
+.itemEmoji {
+    font-size: 1.8rem;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+}
+
+.itemInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.itemName {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.itemDetail {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.itemPrice {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent-warning);
+}
+
+.itemActions {
+    flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+}

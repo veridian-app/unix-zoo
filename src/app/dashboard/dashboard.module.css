@@ -1,0 +1,196 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    animation: fadeIn 0.4s ease-out;
+}
+
+.headerSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+}
+
+.greeting {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+.date {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-transform: capitalize;
+    margin-top: 4px;
+}
+
+.viewTabs {
+    display: flex;
+    gap: var(--space-xs);
+    background: var(--bg-card);
+    padding: 4px;
+    border-radius: var(--radius-lg);
+    width: fit-content;
+    border: 1px solid var(--border-color);
+}
+
+.tab {
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+}
+
+.tab:hover {
+    color: var(--text-primary);
+}
+
+.tabActive {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-glow);
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+}
+
+.statCard {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.statLabel {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.statValue {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.statMeta {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.trackingBanner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    background: rgba(129, 140, 248, 0.08);
+    border-color: rgba(129, 140, 248, 0.3);
+    padding: var(--space-md) var(--space-lg);
+    font-size: 0.9rem;
+}
+
+.trackingPulse {
+    width: 10px;
+    height: 10px;
+    background: var(--accent-primary);
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+.petBanner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    padding: var(--space-md) var(--space-lg);
+}
+
+.petBannerInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.petBannerName {
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.petBannerBars {
+    display: flex;
+    gap: var(--space-md);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.tasksSection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.sectionTitle {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.sectionCount {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.tasksList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-3xl) var(--space-lg);
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.emptyIcon {
+    font-size: 3rem;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+@media (max-width: 1024px) {
+    .statsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .statsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .greeting {
+        font-size: 1.4rem;
+    }
+
+    .headerSection {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

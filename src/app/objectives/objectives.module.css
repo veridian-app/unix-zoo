@@ -1,0 +1,171 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    animation: fadeIn 0.4s ease-out;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 800;
+}
+
+.objectivesList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.objectiveCard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.objectiveCard.completed {
+    opacity: 0.7;
+}
+
+.objectiveCard.overdue {
+    border-left: 3px solid var(--accent-danger);
+}
+
+.objHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-md);
+}
+
+.objHeaderLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.objHeaderRight {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-shrink: 0;
+}
+
+.objTitle {
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: var(--font-display);
+}
+
+.objAssignee {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.objDescription {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.progressSection {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.progressInfo {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.progressPercent {
+    font-weight: 700;
+    color: var(--accent-primary);
+}
+
+.subTasks {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-left: var(--space-md);
+    border-left: 2px solid var(--border-color);
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-3xl);
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.emptyIcon {
+    font-size: 3rem;
+}
+
+/* Modal */
+.modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-lg);
+}
+
+.modalHeader h2 {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+}
+
+.subTasksSection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.subTaskRow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.actions {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: flex-end;
+}
+
+@media (max-width: 480px) {
+    .row {
+        grid-template-columns: 1fr;
+    }
+}
