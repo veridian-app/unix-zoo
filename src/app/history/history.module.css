@@ -1,0 +1,209 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    animation: fadeIn 0.4s ease-out;
+}
+
+.pageHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 800;
+}
+
+/* Empty state */
+.emptyCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-xxl);
+    text-align: center;
+}
+
+.emptyIcon {
+    font-size: 3rem;
+}
+
+.emptyText {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    max-width: 400px;
+}
+
+/* Week Selector */
+.weekSelector {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.selectorLabel {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.select {
+    flex: 1;
+    max-width: 400px;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.select:focus {
+    border-color: var(--accent-primary);
+    outline: none;
+}
+
+/* Stats Grid */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-md);
+}
+
+.statCard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-lg);
+}
+
+.statLabel {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+}
+
+.statValue {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+/* Breakdown */
+.breakdownCard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.sectionTitle {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.memberList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.memberRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.memberRow:last-child {
+    border-bottom: none;
+}
+
+.memberInfo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-width: 0;
+}
+
+.memberName {
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: block;
+}
+
+.memberMeta {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    display: block;
+}
+
+.memberStats {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-shrink: 0;
+}
+
+.rateWrap {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 55px;
+}
+
+.rateValue {
+    font-weight: 800;
+    font-size: 0.95rem;
+}
+
+.barTrack {
+    width: 80px;
+    height: 6px;
+    background: var(--bg-surface);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.barFill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width 0.5s ease;
+}
+
+.coinBadge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent-warning);
+    min-width: 60px;
+    text-align: right;
+}
+
+.bonus {
+    color: var(--accent-secondary);
+    margin-left: 4px;
+    font-size: 0.7rem;
+}
+
+@media (max-width: 600px) {
+    .memberRow {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .memberStats {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .barTrack {
+        flex: 1;
+    }
+}

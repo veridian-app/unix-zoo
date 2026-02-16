@@ -3,7 +3,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { v4 as uuidv4 } from 'uuid';
-import { TeamMember, Task, Objective, PetState } from '@/types';
+import { TeamMember, Task, Objective, PetState, WeeklyRecord, MemberWeekStats } from '@/types';
 import { TEAM_MEMBERS } from '@/data/teamMembers';
 import { ALL_SHOP_ITEMS } from '@/data/shopItems';
 
@@ -11,6 +11,10 @@ import { ALL_SHOP_ITEMS } from '@/data/shopItems';
 const COINS_TASK_ON_TIME = 10;
 const COINS_TASK_LATE = 3;
 const COINS_OBJECTIVE_BONUS = 50;
+const BONUS_1ST = 30;
+const BONUS_2ND = 20;
+const BONUS_3RD = 10;
+const BONUS_HIGH_PERF = 15;  // ≥90% completion
 
 interface AppState {
     // Auth
@@ -44,6 +48,10 @@ interface AppState {
     feedPet: (memberId: string, foodId: string) => void;
     equipHat: (memberId: string, hatId: string | null) => void;
     equipAccessory: (memberId: string, accId: string | null) => void;
+
+    // Weekly Recap
+    weeklyRecords: WeeklyRecord[];
+    closeWeek: () => WeeklyRecord;
 
     // Utility
     lockExpiredTasks: () => void;
@@ -336,6 +344,127 @@ export const useStore = create<AppState>()(
                     ),
                 })),
 
+            // Weekly Recap
+            weeklyRecords: [],
+
+            closeWeek: () => {
+                const state = get();
+                const now = new Date();
+                // Calculate current week boundaries (Monday-based)
+                const dayOfWeek = now.getDay();
+                const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+                const weekStart = new Date(now);
+                weekStart.setDate(now.getDate() + diffToMonday);
+                weekStart.setHours(0, 0, 0, 0);
+                const weekEnd = new Date(weekStart);
+                weekEnd.setDate(weekEnd.getDate() + 6);
+                weekEnd.setHours(23, 59, 59, 999);
+
+                // Check if this week was already closed
+                const weekStartISO = weekStart.toISOString();
+                const alreadyClosed = state.weeklyRecords.find(
+                    (r) => r.weekStart === weekStartISO
+                );
+                if (alreadyClosed) return alreadyClosed;
+
+                // Calculate stats per member
+                const memberStats: MemberWeekStats[] = state.members.map((member) => {
+                    const memberTasks = state.tasks.filter(
+                        (t) => t.assignedTo === member.id
+                    );
+                    const weekTasks = memberTasks.filter((t) => {
+                        const d = new Date(t.deadline);
+                        return d >= weekStart && d <= weekEnd;
+                    });
+                    const completed = weekTasks.filter((t) => t.completed);
+                    const onTime = completed.filter(
+                        (t) => t.completedAt && new Date(t.completedAt) <= new Date(t.deadline)
+                    );
+                    const validSeconds = onTime.reduce((s, t) => s + t.trackedTimeSeconds, 0);
+                    const invalidSeconds = completed
+                        .filter((t) => t.completedAt && new Date(t.completedAt) > new Date(t.deadline))
+                        .reduce((s, t) => s + t.trackedTimeSeconds, 0);
+
+                    const weekObjectives = state.objectives.filter(
+                        (o) => o.assignedTo === member.id && o.completed &&
+                            o.completedAt && new Date(o.completedAt) >= weekStart &&
+                            new Date(o.completedAt) <= weekEnd
+                    );
+
+                    const rate = weekTasks.length > 0
+                        ? Math.round((completed.length / weekTasks.length) * 100)
+                        : 0;
+
+                    return {
+                        memberId: member.id,
+                        tasksTotal: weekTasks.length,
+                        tasksCompleted: completed.length,
+                        tasksOnTime: onTime.length,
+                        completionRate: rate,
+                        validHoursSeconds: validSeconds,
+                        invalidHoursSeconds: invalidSeconds,
+                        coinsEarned: onTime.length * COINS_TASK_ON_TIME +
+                            (completed.length - onTime.length) * COINS_TASK_LATE +
+                            weekObjectives.length * COINS_OBJECTIVE_BONUS,
+                        bonusCoins: 0,
+                        objectivesCompleted: weekObjectives.length,
+                    };
+                });
+
+                // Rank by completion rate then on-time count
+                const ranked = [...memberStats]
+                    .filter((ms) => ms.tasksTotal > 0)
+                    .sort((a, b) => b.completionRate - a.completionRate || b.tasksOnTime - a.tasksOnTime);
+
+                // Assign podium bonuses
+                if (ranked.length >= 1) {
+                    const first = memberStats.find((m) => m.memberId === ranked[0].memberId)!;
+                    first.bonusCoins += BONUS_1ST;
+                }
+                if (ranked.length >= 2) {
+                    const second = memberStats.find((m) => m.memberId === ranked[1].memberId)!;
+                    second.bonusCoins += BONUS_2ND;
+                }
+                if (ranked.length >= 3) {
+                    const third = memberStats.find((m) => m.memberId === ranked[2].memberId)!;
+                    third.bonusCoins += BONUS_3RD;
+                }
+
+                // High-performance bonus (≥90%)
+                memberStats.forEach((ms) => {
+                    if (ms.completionRate >= 90 && ms.tasksTotal > 0) {
+                        ms.bonusCoins += BONUS_HIGH_PERF;
+                    }
+                });
+
+                const teamTotal = memberStats.reduce((s, m) => s + m.tasksTotal, 0);
+                const teamCompleted = memberStats.reduce((s, m) => s + m.tasksCompleted, 0);
+
+                const record: WeeklyRecord = {
+                    id: uuidv4(),
+                    weekStart: weekStartISO,
+                    weekEnd: weekEnd.toISOString(),
+                    closedAt: now.toISOString(),
+                    memberStats,
+                    topPerformer: ranked.length > 0 ? ranked[0].memberId : null,
+                    teamCompletionRate: teamTotal > 0
+                        ? Math.round((teamCompleted / teamTotal) * 100)
+                        : 0,
+                };
+
+                // Distribute bonus coins to members
+                set((state) => ({
+                    weeklyRecords: [...state.weeklyRecords, record],
+                    members: state.members.map((m) => {
+                        const stats = memberStats.find((ms) => ms.memberId === m.id);
+                        const bonus = stats?.bonusCoins || 0;
+                        return bonus > 0 ? { ...m, coins: m.coins + bonus } : m;
+                    }),
+                }));
+
+                return record;
+            },
+
             // Utilities
             lockExpiredTasks: () => {
                 const now = Date.now();
@@ -367,7 +496,7 @@ export const useStore = create<AppState>()(
         }),
         {
             name: 'unix-zoo-storage',
-            version: 1,
+            version: 2,
         }
     )
 );

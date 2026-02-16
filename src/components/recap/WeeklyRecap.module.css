@@ -1,0 +1,174 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: var(--space-lg);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: var(--space-xl);
+    max-width: 700px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: slideUp 0.4s ease-out;
+    box-shadow: var(--shadow-glow);
+}
+
+.closeBtn {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    transition: color var(--transition-fast);
+}
+
+.closeBtn:hover {
+    color: var(--text-primary);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+}
+
+.trophy {
+    font-size: 3rem;
+    display: block;
+    animation: bounce 1s ease infinite;
+}
+
+.title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-top: var(--space-sm);
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.weekLabel {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.teamRate {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-top: var(--space-xs);
+}
+
+.teamRate strong {
+    color: var(--accent-primary);
+    font-size: 1.2rem;
+}
+
+/* Podium */
+.podium {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+}
+
+.podiumSlot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: var(--space-md);
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    animation: slideUp 0.5s ease-out;
+}
+
+.first {
+    padding: var(--space-lg);
+    border: 2px solid rgba(251, 191, 36, 0.4);
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.15);
+}
+
+.second {
+    opacity: 0.9;
+    animation-delay: 0.1s;
+}
+
+.third {
+    opacity: 0.85;
+    animation-delay: 0.2s;
+}
+
+.medal {
+    font-size: 1.5rem;
+}
+
+.podiumName {
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.podiumRate {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--accent-secondary);
+}
+
+.podiumBonus {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent-warning);
+    background: rgba(251, 191, 36, 0.1);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+}
+
+/* Stats Table */
+.tableWrap {
+    overflow-x: auto;
+    margin-bottom: var(--space-md);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+}
+
+.table th {
+    text-align: left;
+    padding: var(--space-sm) var(--space-md);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table td {
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table tr:hover td {
+    background: var(--bg-surface);
+}
+
+.noTasks {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: center;
+}

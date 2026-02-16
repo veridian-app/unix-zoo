@@ -25,6 +25,7 @@ export default function Sidebar() {
         { href: '/tasks', label: 'Mis Tareas', icon: '✅' },
         { href: '/objectives', label: 'Objetivos', icon: '🎯' },
         { href: '/team', label: 'Equipo', icon: '👥' },
+        { href: '/history', label: 'Historial', icon: '📋' },
         { href: '/pet', label: 'Mi Mascota', icon: ANIMAL_EMOJIS[currentMember.animal] },
     ];
 

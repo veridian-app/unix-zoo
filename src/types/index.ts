@@ -73,5 +73,28 @@ export interface Objective {
   completedAt: string | null;
 }
 
+export interface MemberWeekStats {
+  memberId: string;
+  tasksTotal: number;
+  tasksCompleted: number;
+  tasksOnTime: number;
+  completionRate: number;
+  validHoursSeconds: number;
+  invalidHoursSeconds: number;
+  coinsEarned: number;
+  bonusCoins: number;
+  objectivesCompleted: number;
+}
+
+export interface WeeklyRecord {
+  id: string;
+  weekStart: string;
+  weekEnd: string;
+  closedAt: string;
+  memberStats: MemberWeekStats[];
+  topPerformer: string | null;
+  teamCompletionRate: number;
+}
+
 export type ViewMode = 'today' | 'week' | 'total';
 export type TaskFilter = 'all' | 'mine' | 'assigned-by-me';
