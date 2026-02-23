@@ -24,7 +24,8 @@ export default function TaskModal({ isOpen, onClose, objectiveId = null, editing
     const [description, setDescription] = useState('');
     const [assignedTo, setAssignedTo] = useState(currentUserId || '');
     const [deadline, setDeadline] = useState('');
-    const [estimatedHours, setEstimatedHours] = useState('');
+    const [estimatedH, setEstimatedH] = useState('');
+    const [estimatedM, setEstimatedM] = useState('');
 
     useEffect(() => {
         if (editingTask) {
@@ -32,13 +33,21 @@ export default function TaskModal({ isOpen, onClose, objectiveId = null, editing
             setDescription(editingTask.description);
             setAssignedTo(editingTask.assignedTo);
             setDeadline(editingTask.deadline.split('T')[0]);
-            setEstimatedHours(editingTask.estimatedHours?.toString() || '');
+            if (editingTask.estimatedHours != null) {
+                const totalMin = Math.round(editingTask.estimatedHours * 60);
+                setEstimatedH(Math.floor(totalMin / 60).toString());
+                setEstimatedM((totalMin % 60).toString());
+            } else {
+                setEstimatedH('');
+                setEstimatedM('');
+            }
         } else {
             setTitle('');
             setDescription('');
             setAssignedTo(currentUserId || '');
             setDeadline(new Date().toISOString().split('T')[0]);
-            setEstimatedHours('');
+            setEstimatedH('');
+            setEstimatedM('');
         }
     }, [editingTask, currentUserId, isOpen]);
 
@@ -48,13 +57,18 @@ export default function TaskModal({ isOpen, onClose, objectiveId = null, editing
         e.preventDefault();
         if (!title.trim() || !assignedTo || !deadline) return;
 
+        const deadlineISO = new Date(deadline + 'T23:59:59').toISOString();
+        const h = parseInt(estimatedH) || 0;
+        const m = parseInt(estimatedM) || 0;
+        const totalEstimated = h > 0 || m > 0 ? h + m / 60 : null;
+
         if (editingTask) {
             updateTask(editingTask.id, {
                 title: title.trim(),
                 description: description.trim(),
                 assignedTo,
-                deadline: new Date(deadline).toISOString(),
-                estimatedHours: estimatedHours ? parseFloat(estimatedHours) : null,
+                deadline: deadlineISO,
+                estimatedHours: totalEstimated,
             });
         } else {
             addTask({
@@ -63,8 +77,8 @@ export default function TaskModal({ isOpen, onClose, objectiveId = null, editing
                 objectiveId,
                 assignedTo,
                 assignedBy: currentUserId || '',
-                deadline: new Date(deadline).toISOString(),
-                estimatedHours: estimatedHours ? parseFloat(estimatedHours) : null,
+                deadline: deadlineISO,
+                estimatedHours: totalEstimated,
             });
         }
         onClose();
@@ -133,16 +147,28 @@ export default function TaskModal({ isOpen, onClose, objectiveId = null, editing
                     </div>
 
                     <div className={styles.field}>
-                        <label className="label">Tiempo estimado (horas)</label>
-                        <input
-                            className="input"
-                            type="number"
-                            step="0.5"
-                            min="0"
-                            value={estimatedHours}
-                            onChange={(e) => setEstimatedHours(e.target.value)}
-                            placeholder="Ej: 2.5"
-                        />
+                        <label className="label">Tiempo estimado</label>
+                        <div className={styles.timeInputRow}>
+                            <input
+                                className="input"
+                                type="number"
+                                min="0"
+                                value={estimatedH}
+                                onChange={(e) => setEstimatedH(e.target.value)}
+                                placeholder="0"
+                            />
+                            <span className={styles.timeUnit}>h</span>
+                            <input
+                                className="input"
+                                type="number"
+                                min="0"
+                                max="59"
+                                value={estimatedM}
+                                onChange={(e) => setEstimatedM(e.target.value)}
+                                placeholder="0"
+                            />
+                            <span className={styles.timeUnit}>min</span>
+                        </div>
                         <span className={styles.hint}>
                             Solo para entrenar tu estimación — no penaliza
                         </span>

@@ -187,6 +187,7 @@ export const useStore = create<AppState>()(
         },
 
         deleteTask: (id) => {
+            const task = get().tasks.find((t) => t.id === id);
             set((state) => ({
                 tasks: state.tasks.filter((t) => t.id !== id),
                 objectives: state.objectives.map((o) => ({
@@ -195,13 +196,13 @@ export const useStore = create<AppState>()(
                 })),
             }));
             db.deleteTaskDb(id);
-            // Update objectives that referenced this task
-            const state = get();
-            state.objectives.forEach((o) => {
-                if (o.taskIds.includes(id)) {
-                    db.updateObjectiveDb(o.id, { taskIds: o.taskIds.filter((tid) => tid !== id) });
+            // Persist objective taskIds update (don't trigger completion check)
+            if (task?.objectiveId) {
+                const updatedObj = get().objectives.find((o) => o.id === task.objectiveId);
+                if (updatedObj) {
+                    db.updateObjectiveDb(updatedObj.id, { taskIds: updatedObj.taskIds });
                 }
-            });
+            }
         },
 
         moveTaskDeadline: (id, newDeadline) => {

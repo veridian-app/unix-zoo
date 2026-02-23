@@ -176,7 +176,7 @@ export default function TaskCard({ task, onEdit, compact = false }: TaskCardProp
                     </span>
                     {task.estimatedHours !== null && (
                         <span className={styles.estimated}>
-                            / est. {task.estimatedHours}h
+                            / est. {Math.floor(task.estimatedHours)}h{Math.round((task.estimatedHours % 1) * 60) > 0 ? ` ${Math.round((task.estimatedHours % 1) * 60)}m` : ''}
                         </span>
                     )}
                 </div>
